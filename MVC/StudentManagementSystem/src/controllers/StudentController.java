@@ -7,11 +7,11 @@ package controllers;
 
 /**
  *
- * @author userB12
+ * @author Kasun Gamage
  */
 public class StudentController {
 
-    public static int calculateTotal(int tma1, int tma2, int tma3) {
+    public static int calcTotal(int tma1, int tma2, int tma3) {
         return tma1 + tma2 + tma3;
     }
 }
