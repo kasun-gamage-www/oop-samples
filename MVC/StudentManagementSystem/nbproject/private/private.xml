@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/media/ashe/QDynamics/HD/Academy/oop-samples/MVC/StudentManagementSystem/src/view/StudentManager.java</file>
+            <file>file:/C:/Users/userB10/Documents/NetBeansProjects/StudentManagementSys/src/driver/Driver.java</file>
+            <file>file:/C:/Users/userB10/Documents/NetBeansProjects/StudentManagementSys/src/model/Student.java</file>
+            <file>file:/C:/Users/userB10/Documents/NetBeansProjects/StudentManagementSys/src/daos/DBConnection.java</file>
+            <file>file:/C:/Users/userB10/Documents/NetBeansProjects/StudentManagementSys/src/views/StudentManager.java</file>
+            <file>file:/C:/Users/userB10/Documents/NetBeansProjects/StudentManagementSys/src/controllers/StudentController.java</file>
+            <file>file:/C:/Users/userB10/Documents/NetBeansProjects/StudentManagementSys/src/daos/StudentDAO.java</file>
         </group>
     </open-files>
 </project-private>

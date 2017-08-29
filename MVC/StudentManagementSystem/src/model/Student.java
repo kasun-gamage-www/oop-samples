@@ -7,28 +7,35 @@ package model;
 
 /**
  *
- * @author userB12
+ * @author Kasun Gamage
  */
 public class Student {
 
-    private int regNum;
+    public Student(long registrationNumber) {
+        setRegistrationNumber(registrationNumber);
+    }
+
+    private long registrationNumber;
     private String name;
     private int tma1;
     private int tma2;
     private int tma3;
 
     /**
-     * @return the regNum
+     * @return the registrationNumber
      */
-    public int getRegNum() {
-        return regNum;
+    public long getRegistrationNumber() {
+        return registrationNumber;
     }
 
     /**
-     * @param regNum the regNum to set
+     * @param registrationNumber the registrationNumber to set. The Registration
+     * number should be unalterable once set. Using a private setter is a better
+     * approach than setting it directly in the constructor as this allows
+     * implementation of validation rules
      */
-    private void setRegNum(int regNum) {
-        this.regNum = regNum;
+    private void setRegistrationNumber(long registrationNumber) {
+        this.registrationNumber = registrationNumber;
     }
 
     /**
@@ -85,10 +92,6 @@ public class Student {
      */
     public void setTma3(int tma3) {
         this.tma3 = tma3;
-    }
-
-    public Student(int regNum) {
-        setRegNum(regNum);
     }
 
 }
