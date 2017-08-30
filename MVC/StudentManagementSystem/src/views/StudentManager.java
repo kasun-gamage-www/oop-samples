@@ -6,8 +6,11 @@
 package views;
 
 import controllers.StudentController;
+import daos.DBConnection;
 import daos.StudentDAO;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import model.Student;
 
@@ -68,8 +71,13 @@ public class StudentManager extends javax.swing.JFrame {
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Student Manager");
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         lblRegNum.setText("Registration Number");
 
@@ -268,13 +276,14 @@ public class StudentManager extends javax.swing.JFrame {
             student.setTma2(Integer.parseInt(txtTMA2.getText()));
             student.setTma3(Integer.parseInt(txtTMA3.getText()));
 
-            StudentDAO.insertStudent(student);
-            JOptionPane.showMessageDialog(this, "New Student Record Created!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            txtRegNum.setEditable(false);
+            if (StudentDAO.insertStudent(student) > 0) {
+                JOptionPane.showMessageDialog(this, "New Student Record Created!", "Success", JOptionPane.INFORMATION_MESSAGE, null);
+                txtRegNum.setEditable(false);
+            }
         } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error " + ex, "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error " + ex, "Database Error", JOptionPane.ERROR_MESSAGE, null);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid Registration Number or marks. Please Enter a valid registration number and marks in numeric form.", "Invalid Number", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid Registration Number or marks. Please Enter a valid registration number and marks in numeric form.", "Invalid Number", JOptionPane.ERROR_MESSAGE, null);
         }
     }//GEN-LAST:event_btnAddActionPerformed
 
@@ -288,7 +297,6 @@ public class StudentManager extends javax.swing.JFrame {
             Student student = StudentDAO.findStudent(Long.parseLong(txtSearch.getText()));
 
             if (null != student) {
-
                 txtRegNum.setText(txtSearch.getText());
                 txtName.setText(student.getName());
                 txtTMA1.setText(String.valueOf(student.getTma1()));
@@ -298,12 +306,12 @@ public class StudentManager extends javax.swing.JFrame {
                 txtRegNum.setEditable(false);
                 btnAdd.setEnabled(false);
             } else {
-                JOptionPane.showMessageDialog(this, "No records matching the given ID was found", "No Records", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No records matching the given ID was found", "No Records", JOptionPane.ERROR_MESSAGE, null);
             }
         } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error " + ex, "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error " + ex, "Database Error", JOptionPane.ERROR_MESSAGE, null);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid Registration Number or marks. Please Enter a valid registration number and marks in numeric form.", "Invalid Number", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid Registration Number or marks. Please Enter a valid registration number and marks in numeric form.", "Invalid Number", JOptionPane.ERROR_MESSAGE, null);
         }
     }//GEN-LAST:event_btnSearchActionPerformed
 
@@ -318,14 +326,14 @@ public class StudentManager extends javax.swing.JFrame {
 
             int rowsAffected = StudentDAO.updateStudent(Integer.parseInt(txtRegNum.getText()), student);
             if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(this, "Student Record Updated", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Student Record Updated", "Success", JOptionPane.INFORMATION_MESSAGE, null);
             } else {
-                JOptionPane.showMessageDialog(this, "No records matching the given ID was found", "No Records", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "No records matching the given ID was found", "No Records", JOptionPane.ERROR_MESSAGE, null);
             }
         } catch (ClassNotFoundException | SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error " + ex, "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error " + ex, "Database Error", JOptionPane.ERROR_MESSAGE, null);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid Registration Number. Please Enter a number ", "Invalid ID", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid Registration Number. Please Enter a number ", "Invalid ID", JOptionPane.ERROR_MESSAGE, null);
         }
     }//GEN-LAST:event_btnEditActionPerformed
 
@@ -333,21 +341,21 @@ public class StudentManager extends javax.swing.JFrame {
         try {
             long regNum = Long.parseLong(txtRegNum.getText());
 
-            int userOption = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the student record " + txtRegNum.getText(), "Confirm Delete", JOptionPane.YES_NO_OPTION);
+            int userOption = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete the student record " + txtRegNum.getText(), "Confirm Delete", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null);
 
             if (JOptionPane.YES_OPTION == userOption) {
                 int rowsAffected = StudentDAO.deleteStudent(regNum);
                 if (rowsAffected > 0) {
-                    JOptionPane.showMessageDialog(this, "Student Record Deleted", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Student Record Deleted", "Success", JOptionPane.INFORMATION_MESSAGE, null);
                     resetAllFields();
                 } else {
-                    JOptionPane.showMessageDialog(this, "No records matching the given ID was found", "No Records", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "No records matching the given ID was found", "No Records", JOptionPane.ERROR_MESSAGE, null);
                 }
             }
         } catch (ClassNotFoundException | SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error " + ex, "Database Error", JOptionPane.ERROR_MESSAGE);
         } catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Invalid Registration Number. Please Enter a number ", "Invalid ID", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Invalid Registration Number. Please Enter a number ", "Invalid ID", JOptionPane.ERROR_MESSAGE, null);
         }
     }//GEN-LAST:event_btnDeleteActionPerformed
 
@@ -386,6 +394,19 @@ public class StudentManager extends javax.swing.JFrame {
             txtTMA3.setText("0");
         }
     }//GEN-LAST:event_txtTMA3FocusLost
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        int userOption = JOptionPane.showConfirmDialog(this, "Are you sure you want to exit", "Confirm Exit", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null);
+        if (JOptionPane.YES_OPTION == userOption) {
+            try {
+                DBConnection.closeConnection();
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentManager.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                System.exit(0);
+            }
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

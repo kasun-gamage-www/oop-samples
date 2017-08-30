@@ -40,6 +40,7 @@ public class StudentDAO {
             s.setTma2(results.getInt("tma2"));
             s.setTma3(results.getInt("tma3"));
         }
+        /*If no matching records were found the method returns the initial value of 's' which is null*/
         return s;
     }
 }
